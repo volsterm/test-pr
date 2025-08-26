@@ -10,6 +10,30 @@
 GET {{baseUrl}}/
 Accept: {{contentType}}
 
+### Get All Users
+GET {{baseUrl}}/users
+Accept: {{contentType}}
+
+### Create User
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com"
+}
+
+### Create Another User
+POST {{baseUrl}}/users
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Jane", 
+  "lastName": "Smith",
+  "email": "jane.smith@example.com"
+}
+
 ### ==============================================
 ### Template Requests (for future development)
 ### ==============================================

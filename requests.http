@@ -35,6 +35,37 @@ Content-Type: {{contentType}}
 }
 
 ### ==============================================
+### RabbitMQ Task Queue Endpoints
+### ==============================================
+
+### Create Task (publishes to RabbitMQ queue)
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "Обработать заказ #12345",
+  "description": "Нужно проверить данные клиента и подготовить документы для отправки"
+}
+
+### Create Urgent Task
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "Срочная задача: исправить баг",
+  "description": "Критическая ошибка в системе платежей - нужно исправить в течение часа"
+}
+
+### Create Simple Task
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "Отправить email рассылку",
+  "description": "Разослать информацию о новых акциях всем подписчикам"
+}
+
+### ==============================================
 ### GraphQL Endpoints
 ### ==============================================
 

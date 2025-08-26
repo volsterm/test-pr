@@ -1,0 +1,8 @@
+### Test Task Creation
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "Тестовая задача",
+  "description": "Это описание тестовой задачи для проверки RabbitMQ"
+}

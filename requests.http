@@ -1,0 +1,75 @@
+### Environment Variables
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
+### ==============================================
+### Current API Endpoints
+### ==============================================
+
+### Get Hello World
+GET {{baseUrl}}/
+Accept: {{contentType}}
+
+### ==============================================
+### Template Requests (for future development)
+### ==============================================
+
+### GET Request with Parameters
+# GET {{baseUrl}}/api/users?page=1&limit=10
+# Accept: {{contentType}}
+
+### POST Request
+# POST {{baseUrl}}/api/users
+# Content-Type: {{contentType}}
+# 
+# {
+#   "name": "John Doe",
+#   "email": "john@example.com"
+# }
+
+### PUT Request
+# PUT {{baseUrl}}/api/users/1
+# Content-Type: {{contentType}}
+# 
+# {
+#   "name": "John Smith",
+#   "email": "johnsmith@example.com"
+# }
+
+### PATCH Request
+# PATCH {{baseUrl}}/api/users/1
+# Content-Type: {{contentType}}
+# 
+# {
+#   "email": "newemail@example.com"
+# }
+
+### DELETE Request
+# DELETE {{baseUrl}}/api/users/1
+# Accept: {{contentType}}
+
+### ==============================================
+### Authentication Examples (for future use)
+### ==============================================
+
+### Request with Authorization Header
+# GET {{baseUrl}}/api/protected
+# Accept: {{contentType}}
+# Authorization: Bearer your_token_here
+
+### Request with API Key
+# GET {{baseUrl}}/api/data
+# Accept: {{contentType}}
+# X-API-Key: your_api_key_here
+
+### ==============================================
+### Environment Configurations
+### ==============================================
+
+### Production Environment (uncomment to use)
+# @baseUrl = https://your-production-url.com
+# @contentType = application/json
+
+### Staging Environment (uncomment to use)
+# @baseUrl = https://your-staging-url.com
+# @contentType = application/json

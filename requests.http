@@ -35,6 +35,41 @@ Content-Type: {{contentType}}
 }
 
 ### ==============================================
+### GraphQL Endpoints
+### ==============================================
+
+### GraphQL - Get All Users
+POST {{baseUrl}}/graphql
+Content-Type: {{contentType}}
+
+{
+  "query": "query { users { id firstName lastName email createdAt } }"
+}
+
+### GraphQL - Create User
+POST {{baseUrl}}/graphql
+Content-Type: {{contentType}}
+
+{
+  "query": "mutation($input: CreateUserInput!) { createUser(createUserInput: $input) { id firstName lastName email createdAt } }",
+  "variables": {
+    "input": {
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "email": "alice.johnson@example.com"
+    }
+  }
+}
+
+### GraphQL - Create Another User
+POST {{baseUrl}}/graphql
+Content-Type: {{contentType}}
+
+{
+  "query": "mutation { createUser(createUserInput: { firstName: \"Bob\", lastName: \"Wilson\", email: \"bob.wilson@example.com\" }) { id firstName lastName email createdAt } }"
+}
+
+### ==============================================
 ### Template Requests (for future development)
 ### ==============================================
 

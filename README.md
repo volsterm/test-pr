@@ -1,98 +1,208 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Test PR - NestJS Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is a test project demonstrating NestJS with PostgreSQL, GraphQL, and RabbitMQ integration.
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A comprehensive NestJS application featuring REST API, GraphQL API, database integration with TypeORM, and asynchronous task processing with RabbitMQ.
 
-## Project setup
+## Features
+
+- **NestJS Framework** with TypeScript
+- **PostgreSQL** database integration with TypeORM
+- **GraphQL API** with Apollo Server
+- **REST API** endpoints
+- **RabbitMQ Integration** for task queue processing
+- **User Management System** with CRUD operations
+- **Task Queue System** with producer/consumer pattern
+- **Environment Configuration**
+- **Code Quality Tools** (ESLint, Prettier)
+
+## Installation
 
 ```bash
-$ pnpm install
+pnpm install
 ```
 
-## Compile and run the project
+## Environment Configuration
+
+Copy the example environment file and configure your settings:
 
 ```bash
-# development
-$ pnpm run start
+cp .env.example .env
+```
 
-# watch mode
-$ pnpm run start:dev
+Configure the following environment variables:
+
+```env
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=test_db
+
+# RabbitMQ Configuration
+RABBITMQ_URL=amqp://localhost:5672
+```
+
+## Prerequisites
+
+### PostgreSQL Setup
+Make sure you have PostgreSQL running and create a database:
+
+```sql
+CREATE DATABASE test_db;
+```
+
+### RabbitMQ Setup
+Install and start RabbitMQ server:
+
+```bash
+# Docker
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
+```
+
+RabbitMQ Management UI will be available at: `http://localhost:15672` (guest/guest)
+
+## Running the app
+
+```bash
+# development with hot reload
+pnpm run start:dev
+
+# development
+pnpm run start
 
 # production mode
-$ pnpm run start:prod
+pnpm run start:prod
 ```
 
-## Run tests
+## API Endpoints
+
+### REST API
+- `GET /` - Hello World endpoint
+- `GET /users` - Get all users
+- `POST /users` - Create a new user
+- `POST /tasks` - Create a new task (publishes to RabbitMQ queue)
+
+### GraphQL API
+- Endpoint: `/graphql`
+- Playground available at: `http://localhost:3000/graphql`
+
+### RabbitMQ Task Queue
+Tasks created via `POST /tasks` are automatically:
+1. Published to `task_exchange` with routing key `task.create`
+2. Consumed from `task_queue` by the consumer
+3. Processed by printing task details to console
+
+### Sample Requests
+
+Use the `requests.http` file to test all API endpoints including RabbitMQ task examples:
+- User management (REST & GraphQL)
+- Task creation and queue processing
+- Various request patterns
+
+## Testing
 
 ```bash
 # unit tests
-$ pnpm run test
+pnpm run test
+
+# watch mode
+pnpm run test:watch
 
 # e2e tests
-$ pnpm run test:e2e
+pnpm run test:e2e
 
 # test coverage
-$ pnpm run test:cov
+pnpm run test:cov
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Code Quality
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# run linter with auto-fix
+pnpm run lint
+
+# format code
+pnpm run format
+
+# build project
+pnpm run build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Tech Stack
 
-## Resources
+- **Framework:** NestJS
+- **Language:** TypeScript
+- **Database:** PostgreSQL
+- **ORM:** TypeORM
+- **GraphQL:** Apollo Server
+- **Message Queue:** RabbitMQ (@golevelup/nestjs-rabbitmq)
+- **Package Manager:** pnpm
+- **Code Quality:** ESLint, Prettier
+- **Testing:** Jest, Supertest
 
-Check out a few resources that may come in handy when working with NestJS:
+## Project Structure
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```
+src/
+├── app.controller.ts       # Main application controller
+├── app.module.ts           # Root application module
+├── app.service.ts          # Main application service
+├── main.ts                 # Application entry point
+├── tasks/                  # Task queue module
+│   ├── create-task.dto.ts  # Task data transfer objects
+│   ├── tasks.controller.ts # Task REST endpoints
+│   ├── tasks.consumer.ts   # RabbitMQ message consumer
+│   ├── tasks.module.ts     # Task module configuration
+│   └── tasks.service.ts    # Task producer service
+└── users/                  # User management module
+    ├── dto/
+    │   └── create-user.input.ts
+    ├── user.entity.ts
+    ├── users.controller.ts
+    ├── users.module.ts
+    ├── users.resolver.ts
+    └── users.service.ts
+```
 
-## Support
+## RabbitMQ Architecture
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The application implements a **Producer/Consumer** pattern:
 
-## Stay in touch
+### Producer Flow
+1. Client sends `POST /tasks` with task data
+2. `TasksService` creates task with unique ID and timestamp
+3. Task is published to `task_exchange` with routing key `task.create`
+4. Response is returned to client immediately
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Consumer Flow
+1. `TasksConsumer` listens to `task_queue`
+2. When task is received, it processes by logging task details
+3. Task is automatically acknowledged after successful processing
+
+### Queue Configuration
+- **Exchange:** `task_exchange` (topic)
+- **Queue:** `task_queue`
+- **Routing Key:** `task.create`
+
+## Development Guidelines
+
+- Follow existing code style and patterns
+- Use TypeScript strict mode
+- Write tests for new features
+- Use meaningful commit messages
+- Update documentation when adding new features
+- Ensure RabbitMQ is running for full functionality
+
+## Monitoring
+
+- **Application:** `http://localhost:3000`
+- **GraphQL Playground:** `http://localhost:3000/graphql`
+- **RabbitMQ Management:** `http://localhost:15672` (guest/guest)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the UNLICENSED license.

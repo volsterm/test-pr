@@ -1,7 +1,7 @@
 # Multi-stage build for NestJS application
 
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:24-alpine AS builder
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -21,7 +21,7 @@ COPY . .
 RUN pnpm run build
 
 # Production stage
-FROM node:18-alpine AS production
+FROM node:24-alpine AS production
 
 # Install pnpm
 RUN npm install -g pnpm
